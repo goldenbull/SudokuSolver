@@ -8,22 +8,21 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Border BorderThickness="0.2" BorderBrush="Blue"
             Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}">
-        <Grid>
-            <UniformGrid x:Name="grid">
-                <UniformGrid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="1" Click="MenuItem_OnClick" />
-                        <MenuItem Header="2" Click="MenuItem_OnClick" />
-                        <MenuItem Header="3" Click="MenuItem_OnClick" />
-                        <MenuItem Header="4" Click="MenuItem_OnClick" />
-                        <MenuItem Header="5" Click="MenuItem_OnClick" />
-                        <MenuItem Header="6" Click="MenuItem_OnClick" />
-                        <MenuItem Header="7" Click="MenuItem_OnClick" />
-                        <MenuItem Header="8" Click="MenuItem_OnClick" />
-                        <MenuItem Header="9" Click="MenuItem_OnClick" />
-                    </ContextMenu>
-                </UniformGrid.ContextMenu>
-            </UniformGrid>
+        <Grid Background="Transparent">
+            <Grid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="1" Click="MenuItem_OnClick" />
+                    <MenuItem Header="2" Click="MenuItem_OnClick" />
+                    <MenuItem Header="3" Click="MenuItem_OnClick" />
+                    <MenuItem Header="4" Click="MenuItem_OnClick" />
+                    <MenuItem Header="5" Click="MenuItem_OnClick" />
+                    <MenuItem Header="6" Click="MenuItem_OnClick" />
+                    <MenuItem Header="7" Click="MenuItem_OnClick" />
+                    <MenuItem Header="8" Click="MenuItem_OnClick" />
+                    <MenuItem Header="9" Click="MenuItem_OnClick" />
+                </ContextMenu>
+            </Grid.ContextMenu>
+            <UniformGrid x:Name="grid" />
             <Viewbox x:Name="vbox">
                 <TextBlock x:Name="tb" TextAlignment="Center" VerticalAlignment="Center">1</TextBlock>
             </Viewbox>

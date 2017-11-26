@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
-using DevExpress.Mvvm.POCO;
+using System.Windows.Media;
 using libSolver;
 
 namespace SolverWPF
@@ -10,38 +11,21 @@ namespace SolverWPF
     /// </summary>
     public partial class CellGrid : UserControl
     {
-        public class Model
-        {
-            public virtual Cell Cell { get; set; }
-
-            public virtual int?[] Candidates { get; set; }
-            public virtual int? Number { get; set; }
-            public virtual bool IsDetermined { get; set; }
-            public virtual bool IsInvalid { get; set; }
-
-            public void UpdateFromCell()
-            {
-                IsDetermined = Cell.IsDetermined;
-                IsInvalid = Cell.IsInvalid;
-                Number = Cell.Number;
-                Candidates = new int?[9];
-                foreach (var c in Cell.Candidates)
-                    Candidates[c - 1] = c;
-            }
-        }
-
-        private readonly Model model = ViewModelSource<Model>.Create();
+        public MainWindow mainWnd;
+        private Cell Cell;
 
         public CellGrid()
         {
             InitializeComponent();
-            this.DataContext = model;
         }
 
         public void AssignCell(Cell cell)
         {
-            model.Cell = cell;
-            model.UpdateFromCell();
+            this.Cell = cell;
+
+            var candidates = new int?[9];
+            foreach (var c in Cell.Candidates)
+                candidates[c - 1] = c;
 
             if (cell.IsDetermined)
             {
@@ -58,15 +42,25 @@ namespace SolverWPF
                 grid.Children.Clear();
                 grid.Columns = 3;
                 grid.Rows = 3;
-                foreach (var c in model.Candidates)
+                foreach (var c in candidates)
                 {
-                    grid.Children.Add(new TextBlock
+                    grid.Children.Add(new Viewbox
                     {
-                        Text = c.ToString(),
-                        TextAlignment = TextAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center
+                        Margin = new Thickness(2),
+                        Child =
+                            new TextBlock
+                            {
+                                Text = c.ToString(),
+                                TextAlignment = TextAlignment.Center,
+                                VerticalAlignment = VerticalAlignment.Center
+                            }
                     });
                 }
+
+                if (candidates.Count(c => c.HasValue) == 1)
+                    grid.Background = Brushes.LightGreen;
+                if (cell.IsInvalid)
+                    grid.Background = Brushes.Red;
             }
         }
 
@@ -75,12 +69,7 @@ namespace SolverWPF
             if (!(sender is MenuItem menu))
                 return;
             var n = int.Parse(menu.Header.ToString());
-            if (model.Cell.Candidates.Contains(n))
-            {
-                model.Cell.SetNumber(n);
-                model.UpdateFromCell();
-                AssignCell(model.Cell);
-            }
+            mainWnd.UserSetNumber(Cell, n);
         }
     }
 }

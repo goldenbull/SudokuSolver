@@ -9,6 +9,15 @@ namespace libSolver
     /// </summary>
     public class Cell
     {
+        public Cell(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public int X { get; }
+        public int Y { get; }
+
         public int? Number { get; set; }
         public List<int> Candidates { get; set; } = Enumerable.Range(1, 9).ToList();
 

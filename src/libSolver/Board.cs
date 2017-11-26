@@ -4,50 +4,40 @@ using System.Collections.Generic;
 namespace libSolver
 {
     /// <summary>
-    /// 9x9 cells
+    /// 3x3 regions, 9x9 cells
     /// </summary>
     public class Board
     {
-        class Pt
-        {
-            public Pt(int x, int y)
-            {
-                X = x;
-                Y = y;
-            }
-
-            internal int X { get; }
-            internal int Y { get; }
-        }
-
+        public Region[,] Regions { get; } = new Region[3, 3];
         public Cell[,] Cells { get; } = new Cell[9, 9];
+
+        public Board()
+        {
+            Reset();
+        }
 
         /// <summary>
         /// 初始化
         /// </summary>
-        public Board()
+        public void Reset()
         {
-            for (int i = 0; i < 9; i++)
+            // 3x3 region
+            for (int x = 0; x < 3; x++)
             {
-                for (int j = 0; j < 9; j++)
-                    Cells[i, j] = new Cell();
+                for (int y = 0; y < 3; y++)
+                    Regions[x, y] = new Region();
             }
-        }
 
-        List<Pt> CellsInBlock(int x, int y)
-        {
-            if (x < 0 || 9 <= x) throw new ArgumentOutOfRangeException(nameof(x));
-            if (y < 0 || 9 <= y) throw new ArgumentOutOfRangeException(nameof(y));
-
-            var cells = new List<Pt>();
-            var x0 = x / 3;
-            var y0 = y / 3;
-            for (int i = 0; i < 3; i++)
+            // 9x9 cell
+            for (int y = 0; y < 9; y++)
             {
-                for (int j = 0; j < 3; j++)
-                    cells.Add(new Pt(x0 + i, y0 + j));
+                for (int x = 0; x < 9; x++)
+                {
+                    var cell = new Cell(x, y);
+                    Cells[x, y] = cell;
+                    Regions[x / 3, y / 3].Cells[x % 3, y % 3] = cell;
+                }
             }
-            return cells;
         }
 
         public void SetNumber(int x, int y, int number)
@@ -59,6 +49,9 @@ namespace libSolver
             var cell = Cells[x, y];
             if (cell.IsDetermined)
                 throw new Exception($"[{x},{y}] already has number {cell.Number}");
+
+            if (!cell.Candidates.Contains(number))
+                throw new ArgumentOutOfRangeException(nameof(number));
 
             // 当前点
             cell.SetNumber(number);
@@ -73,10 +66,10 @@ namespace libSolver
             }
 
             // 3x3 block
-            foreach (var pt in CellsInBlock(x, y))
+            foreach (var c in Regions[x / 3, y / 3].Cells)
             {
-                if (pt.X != x && pt.Y != y)
-                    Cells[pt.X, pt.Y].RemoveCandidate(number);
+                if (c.X != x && c.Y != y)
+                    c.RemoveCandidate(number);
             }
         }
     }

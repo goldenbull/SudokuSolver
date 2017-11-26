@@ -9,9 +9,9 @@
              mc:Ignorable="d"
              Title="数独解题器" Height="600" Width="800"
              WindowState="Maximized"
-             Loaded="MainWindow_OnLoaded">
-    <dxlc:LayoutControl Orientation="Vertical">
-        <dxlc:LayoutGroup VerticalAlignment="Top" HorizontalAlignment="Center" Width="400">
+             Loaded="MainWindow_OnLoaded" Background="LightGray">
+    <dxlc:LayoutControl>
+        <dxlc:LayoutGroup Orientation="Vertical" HorizontalAlignment="Left">
             <dxlc:LayoutItem HorizontalAlignment="Stretch">
                 <Button Margin="10" Width="80" Height="60" Click="BtnReset_OnClick">重新开始</Button>
             </dxlc:LayoutItem>
@@ -21,7 +21,8 @@
         </dxlc:LayoutGroup>
         <Border BorderThickness="1" BorderBrush="Blue"
                 Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}">
-            <UniformGrid x:Name="_uniGrid" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" />
+            <UniformGrid x:Name="_uniGrid" Columns="3" Rows="3"
+                         Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" />
         </Border>
     </dxlc:LayoutControl>
 </dx:DXWindow>
