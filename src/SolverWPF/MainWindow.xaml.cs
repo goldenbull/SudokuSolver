@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using DevExpress.Xpf.Core;
+using DevExpress.Xpf.Core.Native;
+using libSolver;
 
 namespace SolverWPF
 {
@@ -21,13 +13,15 @@ namespace SolverWPF
     /// </summary>
     public partial class MainWindow : DXWindow
     {
+        readonly Board board = new Board();
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// 初始化所有grid
+        /// 初始化所有grid，9个block，每个block内部9个cell
         /// </summary>
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -35,18 +29,23 @@ namespace SolverWPF
             _uniGrid.Rows = 3;
             for (int i = 0; i < 9; i++)
             {
+                var block = new UniformGrid {Columns = 3, Rows = 3};
+                for (int j = 0; j < 9; j++)
+                {
+                    var cell = board.Cells[(i % 3) * 3 + j % 3, (i / 3) * 3 + j / 3];
+                    var cg = new CellGrid();
+                    cg.AssignCell(cell);
+                    block.Children.Add(cg);
+                }
+
                 var border = new Border
                 {
-                    BorderThickness = new Thickness(1),
+                    BorderThickness = new Thickness(0.5),
                     BorderBrush = Brushes.Blue,
-                    Margin = new Thickness(3),
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
-                    Child = new TextBlock {Text = i.ToString()}
+                    Child = block,
                 };
 
-                var vbox = new Viewbox {Child = border,Stretch = Stretch.Fill};
-                _uniGrid.Children.Add(vbox);
+                _uniGrid.Children.Add(border);
             }
         }
 

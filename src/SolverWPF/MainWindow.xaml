@@ -21,7 +21,7 @@
         </dxlc:LayoutGroup>
         <Border BorderThickness="1" BorderBrush="Blue"
                 Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}">
-            <UniformGrid x:Name="_uniGrid"/>
+            <UniformGrid x:Name="_uniGrid" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" />
         </Border>
     </dxlc:LayoutControl>
 </dx:DXWindow>
