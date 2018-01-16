@@ -1,0 +1,36 @@
+<div class="container-fluid">
+
+  <div class="page-header text-center"><h1>数独助手</h1></div>
+
+  <div class="row justify-content-center">
+
+    <nav class="col-sm-1 sidebar">
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="#">重新开始</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">回退一步</a>
+        </li>
+        <!--<li class="nav-item">-->
+        <!--<a class="nav-link" href="https://github.com/goldenbull/SudokuSolver">源代码</a>-->
+        <!--</li>-->
+      </ul>
+    </nav>
+
+    <div class="col-sm-auto">
+      <canvas #mycanvas
+              style="border: 1px solid blue"
+              (mousemove)="onmousemove($event)"
+              (click)="onclick($event)"></canvas>
+    </div>
+
+    <div class="col-sm-1">
+      <p>X: {{x}}</p>
+      <p>Y: {{y}}</p>
+      <p>{{_dbgTxt}}</p>
+    </div>
+
+  </div>
+
+</div>
