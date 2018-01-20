@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
   // 游戏逻辑模块
   board = new Board();
-  board_size = 810;
+  board_size = 720;
 
   constructor(public dialog: MatDialog) {
   }
@@ -50,11 +50,14 @@ export class AppComponent implements OnInit {
   public onclick(e: MouseEvent): void {
     this._dbgTxt1 = `clicked at ${e.offsetX} ${e.offsetY}`;
 
+    // 弹出选择框
     const dialogRef = this.dialog.open(PopupFormComponent, {
       width: '250px',
       data: {v1: 123, v2: 'hello'}
     });
+    dialogRef.updatePosition({left: `${e.clientX}px`, top: `${e.clientY}px`});
 
+    // 处理返回结果
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log(result);
