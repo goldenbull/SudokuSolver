@@ -5,17 +5,21 @@
     <div class="col-sm-2">
       <h2>数独助手</h2>
       <p>
-        <button type="button" class="btn btn-primary">重新开始</button>
+        <button type="button" class="btn btn-primary" (click)="restart()">重新开始</button>
       </p>
       <p>
-        <button type="button" class="btn btn-primary">回退一步</button>
+        <button type="button" class="btn btn-primary" (click)="revert()">回退一步</button>
+      </p>
+
+      <p>
+        调整大小 {{board_size}}
+      </p>
+      <p>
+        <input type="range" min="300" max="900" step="100"
+               [(ngModel)]="board_size" (change)="resizeBoard()">
       </p>
 
       <div class="panel">
-        <p>X: {{x}}</p>
-        <p>Y: {{y}}</p>
-        <p>{{_dbgTxt1}}</p>
-        <p>{{_dbgTxt2}}</p>
       </div>
 
     </div>
@@ -23,7 +27,6 @@
     <div class="col-sm-auto">
       <canvas #mycanvas
               style="border: 1px solid blue"
-              (mousemove)="onmousemove($event)"
               (click)="onclick($event)"></canvas>
     </div>
 

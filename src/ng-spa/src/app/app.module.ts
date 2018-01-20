@@ -4,6 +4,7 @@ import {MatDialogModule} from '@angular/material';
 import {AppComponent} from './app.component';
 import {PopupFormComponent} from './popup-form/popup-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   entryComponents: [
     PopupFormComponent

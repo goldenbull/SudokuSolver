@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Board} from './game';
+import {Board, Cell} from './game';
 import {PopupFormComponent} from './popup-form/popup-form.component';
 import {MatDialog} from '@angular/material';
 
@@ -13,16 +13,10 @@ export class AppComponent implements OnInit {
   // canvas 相关
   @ViewChild('mycanvas') public canvas: ElementRef;
   ctx: CanvasRenderingContext2D;
-  x = 0;
-  y = 0;
-
-  // debug
-  _dbgTxt1: string;
-  _dbgTxt2: string;
 
   // 游戏逻辑模块
   board = new Board();
-  board_size = 720;
+  board_size = 700;
 
   constructor(public dialog: MatDialog) {
   }
@@ -35,37 +29,59 @@ export class AppComponent implements OnInit {
     this.drawBoard();
   }
 
-  // 重画整个board
-  drawBoard() {
-    this.board.draw(this.ctx, 0, 0, this.board_size - 1, this.board_size - 1);
+  resizeBoard() {
+    this.canvas.nativeElement.width = this.board_size;
+    this.canvas.nativeElement.height = this.board_size;
+    this.drawBoard();
   }
 
-  // debug
-  public onmousemove(e: MouseEvent): void {
-    this.x = e.offsetX;
-    this.y = e.offsetY;
+  // 重画整个board
+  drawBoard() {
+    this.board.draw(this.ctx, this.board_size - 1, this.board_size - 1);
+  }
+
+  restart() {
+    if (confirm('重新开始？')) {
+      this.board.reset();
+      this.drawBoard();
+    }
+  }
+
+  revert() {
+    this.board.revert();
+    this.drawBoard();
+  }
+
+  cellAtPos(offsetX: number, offsetY: number): Cell {
+    const x = Math.floor(offsetX / this.board_size * 9);
+    const y = Math.floor(offsetY / this.board_size * 9);
+    return this.board.get_cell(x, y);
   }
 
   // 点击一个格，弹出数字选择框
   public onclick(e: MouseEvent): void {
-    this._dbgTxt1 = `clicked at ${e.offsetX} ${e.offsetY}`;
+    // 得到选中的cell
+    const cell = this.cellAtPos(e.offsetX, e.offsetY);
+    if (cell == null || cell.n != null) {
+      return;
+    }
 
     // 弹出选择框
+    const edge = `${this.board_size / 9 * 2}px`;
     const dialogRef = this.dialog.open(PopupFormComponent, {
-      width: '250px',
-      data: {v1: 123, v2: 'hello'}
+      position: {left: `${e.clientX}px`, top: `${e.clientY}px`},
+      height: edge,
+      width: edge,
+      data: {cell: cell, edge: edge}
     });
-    dialogRef.updatePosition({left: `${e.clientX}px`, top: `${e.clientY}px`});
 
     // 处理返回结果
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
       if (result === undefined) {
-        this._dbgTxt2 = 'no data return from dialog';
-      } else {
-        this._dbgTxt2 = result;
+        return;
       }
+      this.board.setNumber(cell, result);
+      this.drawBoard();
     });
   }
 }

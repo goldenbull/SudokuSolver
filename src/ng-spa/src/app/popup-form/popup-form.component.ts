@@ -1,5 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Cell} from '../game';
 
 @Component({
   selector: 'app-popup-form',
@@ -8,19 +9,25 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 })
 export class PopupFormComponent implements OnInit {
 
-  v1: number;
-  v2: string;
+  @ViewChild('selectNum') public canvas: ElementRef;
+
+  cell: Cell;
+  edge: number;
 
   constructor(public dialogRef: MatDialogRef<PopupFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.v1 = data.v1;
-    this.v2 = data.v2;
+    this.cell = data.cell;
+    this.edge = data.edge;
   }
 
   ngOnInit(): void {
+    console.log(this.edge);
+    this.canvas.nativeElement.width = this.edge;
+    this.canvas.nativeElement.height = this.edge;
+    const ctx = this.canvas.nativeElement.getContext('2d');
   }
 
   onclick(): void {
-    this.dialogRef.close('this is result from dialog');
+    this.dialogRef.close(9);
   }
 }
