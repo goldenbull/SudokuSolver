@@ -1,4 +1,5 @@
 // 候选数字0-9，保存单个格子的各种状态
+
 export class Cell {
 
   // for debug
@@ -61,7 +62,7 @@ export class Cell {
       for (const c of this.candidates) {
         // 高亮正确的候选数字
         if (c === this.correct_cand) {
-          ctx.fillStyle = 'blue';
+          ctx.fillStyle = 'green';
         } else {
           ctx.fillStyle = 'black';
         }
@@ -196,23 +197,61 @@ export class Board {
   }
 
   // 设置一个数，0表示clear TODO:清除功能和回退功能加在一起，比较复杂
-  setNumber(cell: Cell, result: number) {
-    cell.setNumber(result);
+  setNumber(cell: Cell, num: number) {
+    cell.setNumber(num);
+    this.history.push([cell.x, cell.y, num]);
 
     // 干掉其他的竞争对手
     for (const c of this.cellsInCol(cell.x)) {
       if (c !== cell) {
-        c.removeCandidate(result);
+        c.removeCandidate(num);
       }
     }
     for (const c of this.cellsInRow(cell.y)) {
       if (c !== cell) {
-        c.removeCandidate(result);
+        c.removeCandidate(num);
       }
     }
     for (const c of this.cellsInRegion(Math.floor(cell.x / 3), Math.floor(cell.y / 3))) {
       if (c !== cell) {
-        c.removeCandidate(result);
+        c.removeCandidate(num);
+      }
+    }
+
+    // 自动寻找唯一的备选项
+    for (const arr of this.cells) {
+      for (const c of arr) {
+        if (c.candidates.length === 1) {
+          c.correct_cand = c.candidates[0];
+        }
+      }
+    }
+
+    // 进阶搜索：每一行、一列、一个region里面的所有的备选项，某个数只出现一次
+    for (let i = 0; i < 9; i++) {
+      this.find_corr_candidate(this.cellsInRow(i));
+      this.find_corr_candidate(this.cellsInCol(i));
+      this.find_corr_candidate(this.cellsInRegion(Math.floor(i / 3), i % 3));
+    }
+  }
+
+  find_corr_candidate(cells: Cell[]) {
+    const counter = {};
+    for (let n = 1; n <= 9; n++) {
+      counter[n] = 0;
+    }
+    for (const c of cells) {
+      for (const n of c.candidates) {
+        counter[n]++;
+      }
+    }
+    for (let n = 1; n <= 9; n++) {
+      if (counter[n] === 1) {
+        for (const c of cells) {
+          if (c.candidates.indexOf(n) >= 0) {
+            c.correct_cand = n;
+          }
+        }
       }
     }
   }

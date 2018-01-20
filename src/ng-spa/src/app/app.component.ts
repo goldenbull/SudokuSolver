@@ -67,11 +67,12 @@ export class AppComponent implements OnInit {
     }
 
     // 弹出选择框
-    const edge = `${this.board_size / 9 * 2}px`;
+    const edge = Math.floor(this.board_size / 9 * 2);
     const dialogRef = this.dialog.open(PopupFormComponent, {
+      id: 'dlg000',
       position: {left: `${e.clientX}px`, top: `${e.clientY}px`},
-      height: edge,
-      width: edge,
+      height: `${edge + 20}px`,
+      width: `${edge + 20}px`,
       data: {cell: cell, edge: edge}
     });
 

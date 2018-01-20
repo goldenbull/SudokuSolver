@@ -1,3 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* TODO: there should be better solution to override the style */
+.mat-dialog-container {
+  padding: 5px !important;
+}
