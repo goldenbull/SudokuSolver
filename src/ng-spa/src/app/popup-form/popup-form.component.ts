@@ -17,7 +17,7 @@ export class PopupFormComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<PopupFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.cell = data.cell;
-    this.edge = Math.floor(data.edge);
+    this.edge = data.edge - 8;
   }
 
   ngOnInit(): void {
@@ -32,9 +32,9 @@ export class PopupFormComponent implements OnInit {
       for (let y = 0; y < 3; y++) {
         const n = x + y * 3 + 1;
         if (this.cell.candidates.indexOf(n) >= 0) {
-          ctx.fillText(n.toString(),
-            Math.trunc(x * edge + edge / 2),
-            Math.trunc(y * edge + edge / 2));
+          const x0 = Math.trunc(x * edge + edge / 2);
+          const y0 = Math.trunc(y * edge + edge / 2);
+          ctx.fillText(n.toString(), x0, y0);
         }
       }
     }

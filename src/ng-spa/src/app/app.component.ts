@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
   // 游戏逻辑模块
   board = new Board();
-  board_size = 700;
+  board_size = 600;
 
   constructor(public dialog: MatDialog) {
   }
@@ -71,8 +71,8 @@ export class AppComponent implements OnInit {
     const dialogRef = this.dialog.open(PopupFormComponent, {
       panelClass: 'popup-dlg',
       position: {left: `${e.clientX}px`, top: `${e.clientY}px`},
-      height: `${edge + 20}px`,
-      width: `${edge + 20}px`,
+      height: `${edge}px`,
+      width: `${edge}px`,
       data: {cell: cell, edge: edge}
     });
 
