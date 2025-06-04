@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net9.0-windows</TargetFramework>
+        <RootNamespace>SolverWPF</RootNamespace>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Drawing.Common" Version="9.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\libSolver\libSolver.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="DevExpress.Data.Desktop.v23.2">
+            <HintPath>dx\DevExpress.Data.Desktop.v23.2.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Data.v23.2">
+            <HintPath>dx\DevExpress.Data.v23.2.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Images.v23.2">
+            <HintPath>dx\DevExpress.Images.v23.2.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Mvvm.v23.2">
+            <HintPath>dx\DevExpress.Mvvm.v23.2.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Mvvm.v23.2.ViewModel">
+            <HintPath>dx\DevExpress.Mvvm.v23.2.ViewModel.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Xpf.Controls.v23.2">
+            <HintPath>dx\DevExpress.Xpf.Controls.v23.2.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Xpf.Core.v23.2">
+            <HintPath>dx\DevExpress.Xpf.Core.v23.2.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Xpf.Docking.v23.2">
+            <HintPath>dx\DevExpress.Xpf.Docking.v23.2.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Xpf.Grid.v23.2">
+            <HintPath>dx\DevExpress.Xpf.Grid.v23.2.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Xpf.Layout.v23.2.Core">
+            <HintPath>dx\DevExpress.Xpf.Layout.v23.2.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Xpf.LayoutControl.v23.2">
+            <HintPath>dx\DevExpress.Xpf.LayoutControl.v23.2.dll</HintPath>
+        </Reference>
+        <Reference Include="DevExpress.Xpf.Themes.Office2019White.v23.2">
+            <HintPath>dx\DevExpress.Xpf.Themes.Office2019White.v23.2.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+</Project>
