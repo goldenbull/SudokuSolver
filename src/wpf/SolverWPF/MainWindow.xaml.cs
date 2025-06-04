@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using DevExpress.Xpf.Core;
-using libSolver;
 
 namespace SolverWPF
 {

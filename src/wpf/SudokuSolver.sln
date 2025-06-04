@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36121.58 d17.14
+VisualStudioVersion = 17.14.36121.58
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolverWPF", "SolverWPF\SolverWPF.csproj", "{2516D096-6176-483B-BD2B-86A6D8FD6B5B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libSolver", "libSolver\libSolver.csproj", "{669424BA-BBC5-49A7-AAD8-C5CCE4184AAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{2516D096-6176-483B-BD2B-86A6D8FD6B5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2516D096-6176-483B-BD2B-86A6D8FD6B5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2516D096-6176-483B-BD2B-86A6D8FD6B5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{669424BA-BBC5-49A7-AAD8-C5CCE4184AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{669424BA-BBC5-49A7-AAD8-C5CCE4184AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{669424BA-BBC5-49A7-AAD8-C5CCE4184AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{669424BA-BBC5-49A7-AAD8-C5CCE4184AAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

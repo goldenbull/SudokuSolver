@@ -12,10 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\libSolver\libSolver.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
         <Reference Include="DevExpress.Data.Desktop.v23.2">
             <HintPath>dx\DevExpress.Data.Desktop.v23.2.dll</HintPath>
         </Reference>
