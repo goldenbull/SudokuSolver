@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.png" width="125" height="125" />
@@ -14,6 +9,8 @@ import TheWelcome from './components/TheWelcome.vue'
 
   <main>
     <TheWelcome />
+    <v-btn class="text-none" @click="counter.increment()"> Counter is {{ counter.count }}</v-btn>
+    <v-chip>doubled: {{counter.doubleCount}}</v-chip>
   </main>
 </template>
 
@@ -45,3 +42,11 @@ header {
   }
 }
 </style>
+
+<script setup lang="ts">
+import HelloWorld from './components/HelloWorld.vue'
+import TheWelcome from './components/TheWelcome.vue'
+import { useCounterStore } from '@/stores/counter.ts'
+
+const counter = useCounterStore()
+</script>
