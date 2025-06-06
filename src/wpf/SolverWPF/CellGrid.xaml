@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SolverWPF"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Border BorderThickness="0.2" BorderBrush="Blue"
+    <Border x:Name="border" BorderThickness="0.2" BorderBrush="Blue"
             Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}">
         <Grid Background="Transparent">
             <Grid.ContextMenu>

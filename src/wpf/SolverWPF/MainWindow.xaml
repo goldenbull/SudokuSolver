@@ -9,7 +9,8 @@
              mc:Ignorable="d"
              Title="数独解题器" Height="600" Width="800"
              WindowState="Maximized"
-             Loaded="MainWindow_OnLoaded" Background="LightGray">
+             Loaded="MainWindow_OnLoaded" Background="LightGray"
+             KeyDown="DXWindow_KeyDown">
     <dxlc:LayoutControl>
         <dxlc:LayoutGroup Orientation="Vertical" HorizontalAlignment="Left">
             <dxlc:LayoutItem HorizontalAlignment="Stretch">
@@ -17,6 +18,9 @@
             </dxlc:LayoutItem>
             <dxlc:LayoutItem HorizontalAlignment="Stretch">
                 <Button Margin="10" Width="80" Height="60" Click="BtnBack_OnClick">回退</Button>
+            </dxlc:LayoutItem>
+            <dxlc:LayoutItem HorizontalAlignment="Stretch">
+                <Button Margin="10" Width="80" Height="60" Click="BtnAuto_OnClick">Auto</Button>
             </dxlc:LayoutItem>
         </dxlc:LayoutGroup>
         <Border BorderThickness="1" BorderBrush="Blue"

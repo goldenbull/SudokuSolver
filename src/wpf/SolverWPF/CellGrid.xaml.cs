@@ -18,7 +18,7 @@ namespace SolverWPF
             InitializeComponent();
         }
 
-        public void AssignCell(Cell cell)
+        public void AssignCell(Cell cell, int selected_x, int selected_y)
         {
             this.Cell = cell;
 
@@ -60,6 +60,15 @@ namespace SolverWPF
                     grid.Background = Brushes.LightGreen;
                 if (cell.IsInvalid)
                     grid.Background = Brushes.Red;
+            }
+
+            if (cell.X == selected_x && cell.Y == selected_y)
+            {
+                border.BorderThickness = new Thickness(1);
+            }
+            else
+            {
+                border.BorderThickness = new Thickness(0.2);
             }
         }
 
