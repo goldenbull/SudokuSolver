@@ -92,23 +92,24 @@ namespace SolverWPF
 
         private void BtnAuto_OnClick(object sender, RoutedEventArgs e)
         {
-            AutoFill();
-            UpdateUI();
+            try
+            {
+                AutoFill();
+                UpdateUI();
+            }
+            catch
+            {
+            }
         }
 
         private void AutoFill()
         {
-            try
+            var cells = board.Cells.Cast<Cell>().Where(c => !c.IsDetermined && c.Candidates.Count == 1).ToArray();
+            foreach (var cell in cells)
             {
-                var cells = board.Cells.Cast<Cell>().Where(c => !c.IsDetermined && c.Candidates.Count == 1).ToArray();
-                foreach (var cell in cells)
-                {
-                    board.SetNumber(cell.X, cell.Y, cell.Candidates[0]);
-                    moves.Add(new Move { x = cell.X, y = cell.Y, number = cell.Candidates[0] });
-                }
-            }
-            catch
-            {
+                var n = cell.Candidates[0];
+                board.SetNumber(cell.X, cell.Y, n);
+                moves.Add(new Move { x = cell.X, y = cell.Y, number = n });
             }
         }
 
@@ -130,6 +131,7 @@ namespace SolverWPF
         /// keyboard actions
         /// </summary>
         int cur_x = 0;
+
         int cur_y = 0;
 
         private void DXWindow_KeyDown(object sender, KeyEventArgs e)
