@@ -1,52 +1,42 @@
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.png" width="125" height="125" />
+  <v-app>
+    <v-app-bar app>
+      <v-row justify="start" align="center">
+        <v-col cols="2">
+          <v-img height="60" src="src/assets/logo.png" />
+        </v-col>
+        <v-col class="text-h4"> 数独助手</v-col>
+      </v-row>
+    </v-app-bar>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+    <v-main>
+      <v-container fluid>
+        <v-row>
+          <v-col>
+            <v-container>
+              <v-row>
+                <v-btn class="ma-1">重新开始</v-btn>
+              </v-row>
+              <v-row>
+                <v-btn class="ma-1">back</v-btn>
+                <v-btn class="ma-1">forward</v-btn>
+              </v-row>
+            </v-container>
+          </v-col>
 
-  <main>
-    <TheWelcome />
-    <v-btn class="text-none" @click="counter.increment()"> Counter is {{ counter.count }}</v-btn>
-    <v-chip>doubled: {{counter.doubleCount}}</v-chip>
-  </main>
+          <v-col>
+            <v-sheet class="pa-2 ma-2"> aaaa</v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
 
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
-import { useCounterStore } from '@/stores/counter.ts'
+import { getGame } from '@/stores/board.ts'
 
-const counter = useCounterStore()
+const game = getGame()
 </script>

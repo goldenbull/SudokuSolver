@@ -55,6 +55,8 @@ export class Cell {
       throw new RangeError(`${c} not in candidates`)
     }
   }
+
+  // TODO: 状态信息，有当前cell可以算出的，有全局计算出的
 }
 
 // 一个完整的截面状态
@@ -66,6 +68,9 @@ export class Board {
   block_groups: Cell[][]
   row_groups: Cell[][]
   col_groups: Cell[][]
+
+  // for debug
+  seq: number = 0
 
   // 初始化
   constructor() {
@@ -113,24 +118,29 @@ export class Board {
 // 包括：设置/清除最终数字，设置/清除备选项，状态前进/后退，自动辅助计算
 export class Game {
   //操作的历史记录
-  boards: Board[] = []
+  private boards: Board[] = []
   // index in history
-  current: number
+  private cur_idx: number
+
+  current(): Board {
+    return this.boards[this.cur_idx]
+  }
 
   constructor() {
     this.boards.push(new Board())
-    this.current = 0
+    this.cur_idx = 0
   }
 
   // 设置一个数
   setNumber(x: number, y: number, num: number) {
-    // clone current board
-    const s = JSON.stringify(this.boards[this.current])
+    // clone cur_idx board
+    const s = JSON.stringify(this.boards[this.cur_idx])
     const board: Board = JSON.parse(s)
 
     // 追加到历史操作记录中
-    this.current++
-    this.boards.splice(this.current, Infinity, board)
+    this.cur_idx++
+    this.boards.splice(this.cur_idx, Infinity, board)
+    board.seq = this.cur_idx
 
     // 在新的board上做操作
 
@@ -155,7 +165,23 @@ export class Game {
       }
     }
 
-    // TODO: 找到唯一候选，以及进阶的集合排除法
+    // TODO: 根据已经决定的数字，找到唯一候选，以及进阶的集合排除法
+  }
+
+  go_back() {
+    if (this.cur_idx == 0) {
+      throw new Error("Can't go back")
+    } else {
+      this.cur_idx--
+    }
+  }
+
+  go_forward() {
+    if (this.cur_idx == this.boards.length - 1) {
+      throw new Error("Can't go forward")
+    } else {
+      this.cur_idx++
+    }
   }
 }
 
