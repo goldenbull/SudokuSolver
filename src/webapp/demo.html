@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>from Erucy</title>
+    <style type="text/css">
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        header, footer {
+            height: 150px;
+            background: yellow;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+        }
+
+        nav {
+            width: 25vw;
+            background: lightblue;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .block {
+            width: min(100%, 100vh - 300px, calc((100vw - 25vw)));
+            aspect-ratio: 1 / 1;
+            background: lightgreen;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<header class="text-center">Header</header>
+<main>
+    <div class="content">
+        <div class="block">Square</div>
+    </div>
+    <nav class="text-center">NAV</nav>
+</main>
+<footer class="text-center">Footer</footer>
+</body>
+</html>
