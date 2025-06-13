@@ -15,7 +15,7 @@
         <v-row class="fill-height">
           <!-- 画图面板 -->
           <v-col cols="9" class="canvas-container" v-resize="onCvsResize">
-            <canvas ref="cvs" class="canvas1"></canvas>
+            <canvas ref="cvs" id="cvs1" class="canvas1"></canvas>
           </v-col>
 
           <!-- 操作面板 -->
@@ -98,6 +98,12 @@ const cvs = useTemplateRef('cvs')
 
 function updateMsg() {
   msg.value = `H=${cvs.value!.clientHeight} W=${cvs.value!.clientWidth}`
+
+  const canvas = document.getElementById('cvs1') as HTMLCanvasElement
+  canvas.width = canvas.clientWidth
+  canvas.height = canvas.clientHeight
+  console.log(`clientWidth=${canvas?.clientWidth} width=${canvas?.width}`)
+  console.log(`clientWidth=${canvas?.clientHeight} width=${canvas?.height}`)
 }
 
 function restartGame() {
@@ -110,21 +116,29 @@ function onCvsResize() {
 }
 
 function debug1() {
-  const ctx = cvs.value.getContext('2d')
-  ctx.translate(2,2);
-  ctx.fillStyle = '#f0f0f0'
-  ctx.fillRect(10, 10, 100, 100)
+  // const ctx = cvs.value.getContext('2d')
+  // ctx.fillStyle = 'red'
+  // ctx.fillRect(10, 10, 100, 100)
+  const canvas = document.getElementById('cvs1') as HTMLCanvasElement
+  canvas.width = canvas.clientWidth
+  canvas.height = canvas.clientHeight
+  console.log(`clientWidth=${canvas?.clientWidth} width=${canvas?.width}`)
+  console.log(`clientWidth=${canvas?.clientHeight} width=${canvas?.height}`)
+
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+  ctx.translate(0.5, 0.5)
+
+  ctx.strokeStyle = 'blue'
+  ctx.beginPath()
+  ctx.rect(10, 10, 30, 30)
+  ctx.stroke()
+
+  ctx.fillStyle = 'red'
+  ctx.fillRect(50, 50, 50, 50)
 }
 
 onMounted(() => {
   console.log('Component mounted!')
-  // let div = document.getElementById('cvsbox') as HTMLDivElement
-  // console.log(div.clientHeight)
-  // console.log(div.clientWidth)
-  //
-  // let cvs = document.getElementById('cvs') as HTMLCanvasElement
-  // cvs.width = div.clientWidth - 80
-  // cvs.height = div.clientHeight - 120
   updateMsg()
 })
 
