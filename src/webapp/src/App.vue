@@ -15,7 +15,7 @@
         <v-row class="fill-height">
           <!-- 画图面板 -->
           <v-col cols="9" class="canvas-container" v-resize="onCvsResize">
-            <canvas ref="cvs" id="cvs1" class="canvas1"></canvas>
+            <canvas ref="cvs" class="canvas1"></canvas>
           </v-col>
 
           <!-- 操作面板 -->
@@ -91,15 +91,18 @@
 </style>
 
 <script lang="ts" setup>
-import { onMounted, onUpdated, ref, useTemplateRef } from 'vue'
+import { onMounted, ref, useTemplateRef } from 'vue'
+import { getStatus } from '@/stores/board.ts'
 
 let msg = ref('debug output here')
 const cvs = useTemplateRef('cvs')
+const { game, setNumber, clear } = getStatus()
 
 function updateMsg() {
   msg.value = `H=${cvs.value!.clientHeight} W=${cvs.value!.clientWidth}`
 
-  const canvas = document.getElementById('cvs1') as HTMLCanvasElement
+  // const canvas = document.getElementById('cvs1') as HTMLCanvasElement
+  const canvas = cvs.value as HTMLCanvasElement
   canvas.width = canvas.clientWidth
   canvas.height = canvas.clientHeight
   console.log(`clientWidth=${canvas?.clientWidth} width=${canvas?.width}`)
@@ -107,6 +110,7 @@ function updateMsg() {
 }
 
 function restartGame() {
+  clear()
   updateMsg()
 }
 
@@ -119,7 +123,8 @@ function debug1() {
   // const ctx = cvs.value.getContext('2d')
   // ctx.fillStyle = 'red'
   // ctx.fillRect(10, 10, 100, 100)
-  const canvas = document.getElementById('cvs1') as HTMLCanvasElement
+  // const canvas = document.getElementById('cvs1') as HTMLCanvasElement
+  const canvas = cvs.value as HTMLCanvasElement
   canvas.width = canvas.clientWidth
   canvas.height = canvas.clientHeight
   console.log(`clientWidth=${canvas?.clientWidth} width=${canvas?.width}`)
@@ -135,15 +140,13 @@ function debug1() {
 
   ctx.fillStyle = 'red'
   ctx.fillRect(50, 50, 50, 50)
+
+  game.setNumber(5, 5, 1)
+  console.log(game.boards.length)
 }
 
 onMounted(() => {
   console.log('Component mounted!')
-  updateMsg()
-})
-
-onUpdated(() => {
-  console.log('Component updated!')
   updateMsg()
 })
 </script>

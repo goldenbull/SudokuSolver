@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 
 // 一个单元格的全部信息
@@ -117,18 +117,20 @@ export class Board {
 // Cell和Board只保存数据，游戏逻辑在此处实现
 // 包括：设置/清除最终数字，设置/清除备选项，状态前进/后退，自动辅助计算
 export class Game {
-  //操作的历史记录
-  private boards: Board[] = []
+  // 操作的历史记录
+  boards: Board[] = [new Board()]
   // index in history
-  private cur_idx: number
+  cur_idx: number = 0
+
+  constructor() {}
+
+  clear() {
+    this.boards = [new Board()]
+    this.cur_idx = 0
+  }
 
   current(): Board {
     return this.boards[this.cur_idx]
-  }
-
-  constructor() {
-    this.boards.push(new Board())
-    this.cur_idx = 0
   }
 
   // 设置一个数
@@ -186,7 +188,27 @@ export class Game {
 }
 
 // pinia状态
-export const getGame = defineStore('game', () => {
-  const game = ref(new Game())
-  return { game }
+export const getStatus = defineStore('status', () => {
+  const key = 'sudoku-board'
+  const s = localStorage.getItem(key)
+  const _game = s == null ? new Game() : (JSON.parse(s) as Game)
+  const game = ref(_game)
+
+  function setNumber(x: number, y: number, n: number) {
+    _game.setNumber(x, y, n)
+  }
+
+  function clear() {
+    _game.clear()
+  }
+
+  watch(
+    game,
+    (newValue) => {
+      localStorage.setItem(key, JSON.stringify(newValue))
+    },
+    { deep: true },
+  )
+
+  return { game, setNumber,clear }
 })
